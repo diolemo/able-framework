@@ -1,6 +1,6 @@
 <?php
 
-class mysql_db extends mysqli
+class MYSQL_Database extends mysqli
 {
    public function __construct($conf)
    {
