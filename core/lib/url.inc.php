@@ -4,23 +4,25 @@ class URL
 {
    protected $__parsed = false;
    
-   public $fragment = null;
-   public $host = null;
    // able-relative url
    public $local = null;
    // able-relative base
    public $base = null;
    // scheme/user/host 
    public $conn = null;
+   
+   public $fragment = null;
+   public $host = null;
    public $pass = null;
    public $path = null;
    public $port = null;
    public $query = null;
    public $raw_query = null;
    public $scheme = null;
+   public $user = null;
+   
    // entire url
    public $url = null;
-   public $user = null;
    
    public static function __parse(&$url)
    {
@@ -39,12 +41,17 @@ class URL
    {
       $bits = (array) $this;
       $bits['query'] = $bits['raw_query'];
-      $this->url = http_build_url($bits);
+      $this->url = http_build_url($bits);  
+          
+      $conn = array();
+      $conn['host'] = &$bits['host'];
+      $conn['pass'] = &$bits['pass'];
+      $conn['port'] = &$bits['port'];
+      $conn['scheme'] = &$bits['scheme'];
+      $conn['user']  = &$bits['user'];
+      $conn['path'] = '/';
       
-      unset($bits['path']);
-      unset($bits['query']);
-      $this->conn = http_build_url($bits);
-      
+      $this->conn = http_build_url($conn);
       return $this->url;
    }
    
