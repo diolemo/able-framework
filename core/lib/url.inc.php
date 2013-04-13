@@ -8,6 +8,8 @@ class URL
    public $host = null;
    // able-relative url
    public $local = null;
+   // scheme/user/host 
+   public $conn = null;
    public $pass = null;
    public $path = null;
    public $port = null;
@@ -36,6 +38,11 @@ class URL
       $bits = (array) $this;
       $bits['query'] = $bits['raw_query'];
       $this->url = http_build_url($bits);
+      
+      unset($bits['path']);
+      unset($bits['query']);
+      $this->conn = http_build_url($bits);
+      
       return $this->url;
    }
    

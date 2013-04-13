@@ -24,9 +24,6 @@ class Request
       self::$url->local = Request::__local_url();
       self::$url->build();
       
-      $prefix = strstr(self::$url->url, self::$url->path, true);
-      self::$url->base = $prefix . Context::$conf['base_url'];
-      
       self::$remote_addr = $_SERVER['REMOTE_ADDR'];
       self::$remote_port = $_SERVER['REMOTE_PORT'];
       
@@ -39,9 +36,9 @@ class Request
    private static function __local_url() 
    {
       $base = Context::$conf['base_url'];
-      $path = self::$url->path;      
+      $path = self::$url->path;
       if (strpos($path, $base) !== 0)
-         throw new Exception();      
+         throw new Exception();
       return substr($path, strlen($base));
    }
    
