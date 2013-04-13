@@ -52,6 +52,8 @@ class URL
       $conn['path'] = '/';
       
       $this->conn = http_build_url($conn);
+      $this->conn = substr($this->conn, 0, -1);
+      
       return $this->url;
    }
    
