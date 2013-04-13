@@ -1,0 +1,24 @@
+RewriteEngine On
+
+RewriteRule ^$ %{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI}index [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/_]+)[/_]([^/_]+)[/_]([^/_]+)[/_]([^/_]+)([/_]|$) $1_$2_$3_$4.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/_]+)[/_]([^/_]+)[/_]([^/_]+)([/_]|$) $1_$2_$3.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/_]+)[/_]([^/_]+)([/_]|$) $1_$2.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/]+)(/|$) $1.php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) core/404.php?source=$1
+
