@@ -8,6 +8,8 @@ class URL
    public $host = null;
    // able-relative url
    public $local = null;
+   // able-relative base
+   public $base = null;
    // scheme/user/host 
    public $conn = null;
    public $pass = null;

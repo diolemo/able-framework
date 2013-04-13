@@ -24,6 +24,9 @@ class Request
       self::$url->local = Request::__local_url();
       self::$url->build();
       
+      self::$url->base = self::$url->conn . 
+         Context::$conf['base_url'];
+      
       self::$remote_addr = $_SERVER['REMOTE_ADDR'];
       self::$remote_port = $_SERVER['REMOTE_PORT'];
       
