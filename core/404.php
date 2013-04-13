@@ -8,14 +8,11 @@ if (Context::$conf['content_dir'] !== null)
 {
    // convert any extra slashes to _ for filenames
    $path = str_replace('/', '_', Request::$url->local);
-
    $file_pattern = sprintf('%s/%s.*',
       Context::$conf['content_dir'],
       $path);
-
-   $files = glob($file_pattern);
-
-   if (count($files) > 0)
+   
+   if (count($files = glob($file_pattern)) > 0)
    {
       require($files[0]);
       return;
