@@ -31,7 +31,7 @@ class DataCache extends Memcache implements DataCacheInterface
       return $this->get($name);
    }
    
-   public function write($name, $value, $expires = 0)
+   public function write($name, $value, $expires = 86400)
    {
       $bits = $this->conf['use_zlib'] ? MEMCACHE_COMPRESSED : 0;
       return $this->set($name, $value, $bits, $expires);
