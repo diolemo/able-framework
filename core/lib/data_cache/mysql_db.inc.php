@@ -10,7 +10,7 @@ class DataCache implements DataCacheInterface
       // the database table name
       'table' => 'able_session',
       // delete frequency (1 / delete_freq)
-      'delete_freq' => 1,
+      'delete_freq' => 20,
    );
    
    public function __construct($conf = array())
