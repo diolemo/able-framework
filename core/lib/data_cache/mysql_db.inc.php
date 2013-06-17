@@ -8,7 +8,7 @@ class DataCache implements DataCacheInterface
    private $conf = array();
    private $defaults = array(
       // the database table name
-      'table' => 'able_session',
+      'table' => 'able_data',
       // delete frequency (1 / delete_freq)
       'delete_freq' => 20,
    );
