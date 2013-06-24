@@ -9,7 +9,7 @@ class Blowfish
    
    public static function __hash($input, $hashed = null) 
    {
-      $bf = new Blowfish(self::COST);
+      $bf = new self(self::COST);
       return $bf->hash($input, $hashed);
    }
    
