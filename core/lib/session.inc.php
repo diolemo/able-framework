@@ -9,32 +9,32 @@ class Session
    
    public static function __commit()
    {
-      return self::$__instance->commit();
+      return static::$__instance->commit();
    }
    
    public static function __on_commit($function)
    {
-      return self::$__instance->on_commit($function);
+      return static::$__instance->on_commit($function);
    }
    
    public static function __read($name)
    {
-      return self::$__instance->read($name);
+      return static::$__instance->read($name);
    }
    
    public static function __token()
    {
-      return self::$__instance->token;
+      return static::$__instance->token;
    }
    
    public static function __write($name, $value)
    {
-      return self::$__instance->write($name, $value);
+      return static::$__instance->write($name, $value);
    }
    
    public static function __delete($name)
    {
-      return self::$__instance->delete($name);
+      return static::$__instance->delete($name);
    }
    
    public static function create_token()
@@ -49,9 +49,9 @@ class Session
    public static function start()
    {
       $token = Cookie::read(Context::$conf['session_cookie']);
-      if ($token === null) $token = self::create_token();
+      if ($token === null) $token = static::create_token();
       Cookie::write(Context::$conf['session_cookie'], $token, 0, '/');
-      return self::$__instance = new Session($token);
+      return static::$__instance = new Session($token);
    }
    
    public function __construct($token) 

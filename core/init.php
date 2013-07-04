@@ -11,11 +11,9 @@ set_include_path(ABLE_BASE_DIR);
 chdir(ABLE_BASE_DIR);
 
 require('core/version.php');
-
 require('core/context.php');
 require('core/conf.defaults.php');
 require('core/conf.php');
-
 require('core/lib.php');
 
 Context::$db = new MySQL_Database(Context::$conf['database']);
@@ -35,7 +33,7 @@ register_shutdown_function(function()
 
 require('core/local.php');
 
-Auth::__check_no_auth();
-Auth::__check_auth_conditions();
+// Auth::__check_no_auth();
+// Auth::__check_auth_conditions();
 
 ?>

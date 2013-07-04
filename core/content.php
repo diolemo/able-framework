@@ -16,17 +16,17 @@ class Content
    public static function __render() 
    {
       // end all open captures
-      while (count(self::$__active_captures) > 0)
-         self::end();
+      while (count(static::$__active_captures) > 0)
+         static::end();
          
-      if (self::$__auto_render === true) 
-         self::render();
+      if (static::$__auto_render === true) 
+         static::render();
       ob_end_flush();
    }
    
    public static function __trim() 
    {
-      if (self::$__auto_trim !== true) 
+      if (static::$__auto_trim !== true) 
          return ob_end_flush();
       
       $out = ob_get_contents();
@@ -43,27 +43,27 @@ class Content
    
    public static function render()
    {
-      if (self::$__type_set === false)
-         self::mime(Context::$conf['mime_type']);
+      if (static::$__type_set === false)
+         static::mime(Context::$conf['mime_type']);
       
-      self::$__content = ob_get_contents();
+      static::$__content = ob_get_contents();
       ob_clean();
       
-      extract(self::$__captured);      
+      extract(static::$__captured);      
       require(Context::$conf['template']);
    }
       
    public static function mime($type, $encoding = ABLE_DEFAULT) 
    {
       if ($encoding === null || $encoding === false) 
-         return self::mime_bin($type);
+         return static::mime_bin($type);
       
       if ($encoding === ABLE_DEFAULT)
          $encoding = Context::$conf['encoding'];
       
       $header = 'Content-Type: %s; charset=%s';
       $header = sprintf($header, $type, $encoding);
-      self::$__type_set = true;
+      static::$__type_set = true;
       header($header);
    }
    
@@ -71,7 +71,7 @@ class Content
    {
       $header = 'Content-Type: %s';
       $header = sprintf($header, $type);
-      self::$__type_set = true;
+      static::$__type_set = true;
       header($header);
    }
    
@@ -81,7 +81,7 @@ class Content
       ob_start();
       require($file);
       $out = ob_get_contents();
-      self::$__captured[$name] = $out;
+      static::$__captured[$name] = $out;
       ob_end_clean();
       return $out;      
    }
@@ -90,9 +90,9 @@ class Content
    public static function capture($name = ABLE_DEFAULT, $value = null)
    {
       if ($value !== null)
-         return self::$__captured[$name] = $value;
+         return static::$__captured[$name] = $value;
       
-      array_push(self::$__active_captures, $name);
+      array_push(static::$__active_captures, $name);
       ob_start();
    }
    
@@ -100,8 +100,8 @@ class Content
    public static function end()
    {
       $out = ob_get_contents();
-      $name = array_pop(self::$__active_captures);
-      self::$__captured[$name] = $out;
+      $name = array_pop(static::$__active_captures);
+      static::$__captured[$name] = $out;
       ob_end_clean();
       return $out;
    }

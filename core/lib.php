@@ -19,6 +19,7 @@ require_once('core/lib/request.inc.php');
 require_once('core/lib/session.inc.php');
 require_once('core/lib/sqloader.inc.php');
 require_once('core/lib/str.inc.php');
+require_once('core/lib/upload.inc.php');
 require_once('core/lib/url.inc.php');
 
 for ($i = 0, $c = count($__able_lib_callbacks); $i < $c; $i++)

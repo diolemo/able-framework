@@ -1,7 +1,7 @@
 <?php
 
 // call the __init() method once all libs load
-$__able_lib_callbacks[] = 'REQUEST::__init';
+$__able_lib_callbacks[] = 'Request::__init';
 
 class Request
 {
@@ -15,20 +15,20 @@ class Request
       $_SERVER['REQUEST_PATH'] = explode('?', 
          $_SERVER['REQUEST_URI'])[0];
       
-      self::$url = new URL();
-      self::$url->scheme = $_SERVER['REQUEST_SCHEME'];
-      self::$url->host = $_SERVER['HTTP_HOST'];
-      self::$url->port = $_SERVER['SERVER_PORT'];
-      self::$url->path = $_SERVER['REQUEST_PATH'];
-      self::$url->raw_query = $_SERVER['QUERY_STRING'];
-      self::$url->local = Request::__local_url();
-      self::$url->build();
+      static::$url = new URL();
+      static::$url->scheme = $_SERVER['REQUEST_SCHEME'];
+      static::$url->host = $_SERVER['HTTP_HOST'];
+      static::$url->port = $_SERVER['SERVER_PORT'];
+      static::$url->path = $_SERVER['REQUEST_PATH'];
+      static::$url->raw_query = $_SERVER['QUERY_STRING'];
+      static::$url->local = Request::__local_url();
+      static::$url->build();
       
-      self::$url->base = self::$url->conn . 
+      static::$url->base = static::$url->conn . 
          Context::$conf['base_url'];
       
-      self::$remote_addr = $_SERVER['REMOTE_ADDR'];
-      self::$remote_port = $_SERVER['REMOTE_PORT'];
+      static::$remote_addr = $_SERVER['REMOTE_ADDR'];
+      static::$remote_port = $_SERVER['REMOTE_PORT'];
       
       Request::$__source = &$_REQUEST;
       Post::$__source = &$_POST;
@@ -39,7 +39,7 @@ class Request
    private static function __local_url() 
    {
       $base = Context::$conf['base_url'];
-      $path = self::$url->path;
+      $path = static::$url->path;
       if (strpos($path, $base) !== 0)
          throw new Exception();
       return substr($path, strlen($base));
@@ -48,31 +48,31 @@ class Request
    // return request data (or set it)
    public static function & data($name = null, $value = null)
    {
-      if ($name === null) return self::$__source;
-      if ($value === null) return self::$__source[$name];
-      self::$__source[$name] = $value;
-      return self::$__source[$name];
+      if ($name === null) return static::$__source;
+      if ($value === null) return static::$__source[$name];
+      static::$__source[$name] = $value;
+      return static::$__source[$name];
    }
    
    // determine if request data is set ~ true
    public static function evaluate($name, $if_true = true)
    {
-      if (!isset(self::$__source[$name])) return false;
-      return self::$__source[$name] ? $if_true : false;
+      if (!isset(static::$__source[$name])) return false;
+      return static::$__source[$name] ? $if_true : false;
    }
    
    // determine if request data is set for <name>
    public static function has($name = null)
    {
-      if ($name === null) return isset(self::$__source);
-      return isset(self::$__source[$name]);
+      if ($name === null) return isset(static::$__source);
+      return isset(static::$__source[$name]);
    }
    
    // return the part for $index 
    public static function param($index)
    {
       $url = new URL();
-      $url->path = self::$url->local;
+      $url->path = static::$url->local;
       return $url->param($index);
    }
    

@@ -41,10 +41,10 @@ class MYSQL_Database extends mysqli
    
    private static function type($value)
    {
-      if (is_integer($value)) return self::T_INTEGER;
-      if (is_float($value)) return self::T_INTEGER;
-      if (is_string($value)) return self::T_STRING;
-      return self::T_BLOB;
+      if (is_integer($value)) return static::T_INTEGER;
+      if (is_float($value)) return static::T_INTEGER;
+      if (is_string($value)) return static::T_STRING;
+      return static::T_BLOB;
    }
 
    // output error
@@ -81,7 +81,7 @@ class MYSQL_Database extends mysqli
    public function set($name, $value, $type = null)
    {
       if ($type === null) 
-         $type = self::type($value);               
+         $type = static::type($value);               
       $sql = "set @${name} = ?";
       $this->call($sql, $type, $value);
    }
@@ -117,7 +117,7 @@ class MYSQL_Database extends mysqli
          if (!is_array($data_args))
             $data_args = array($data_args);
          foreach ($data_args as $arg)
-            $types[] = self::type($arg);
+            $types[] = static::type($arg);
          $type_str = implode($types);
       }
 

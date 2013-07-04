@@ -121,10 +121,10 @@ class Email
         
       $raw_headers = array();         
       foreach($headers as $name => $value)
-        $raw_headers[] = self::raw_header($name, $value);
+        $raw_headers[] = static::raw_header($name, $value);
       
-      $header_lines = implode(self::NL, $raw_headers);
-      $header_lines = $header_lines . self::NL;
+      $header_lines = implode(static::NL, $raw_headers);
+      $header_lines = $header_lines . static::NL;
       
       return $header_lines;
    }
@@ -144,26 +144,26 @@ class Email
          $bound            = md5(microtime());
          $html_message     = $this->message;
          $plain_message    = wordwrap(strip_tags($this->message), 70);
-         $header_lines     = self::raw_header_lines($headers);
+         $header_lines     = static::raw_header_lines($headers);
                   
-         $this->message = implode(self::NL, array(
-            self::raw_bound($bound), 
-            self::raw_header(self::CONTENT_TYPE_HEADER, 
-               self::PLAIN_HEADER_VALUE), 
+         $this->message = implode(static::NL, array(
+            static::raw_bound($bound), 
+            static::raw_header(static::CONTENT_TYPE_HEADER, 
+               static::PLAIN_HEADER_VALUE), 
             $header_lines,
             $plain_message,
-            self::raw_bound($bound),
-            self::raw_header(self::CONTENT_TYPE_HEADER,
-               self::HTML_HEADER_VALUE),
+            static::raw_bound($bound),
+            static::raw_header(static::CONTENT_TYPE_HEADER,
+               static::HTML_HEADER_VALUE),
             $header_lines,
             $html_message,
-            self::raw_bound($bound, true),
+            static::raw_bound($bound, true),
          ));
          
          return array(
             // alternative header
-            self::CONTENT_TYPE_HEADER =>
-               sprintf(self::ALT_HEADER_VALUE, $bound),
+            static::CONTENT_TYPE_HEADER =>
+               sprintf(static::ALT_HEADER_VALUE, $bound),
          );
       }
       
@@ -171,8 +171,8 @@ class Email
       
       return array_merge($headers, array(
          // plain text header
-         self::CONTENT_TYPE_HEADER =>
-            self::PLAIN_HEADER_VALUE,
+         static::CONTENT_TYPE_HEADER =>
+            static::PLAIN_HEADER_VALUE,
       ));
    }
    
@@ -184,11 +184,11 @@ class Email
       {
          $bound         = md5(microtime());
          $message       = $this->message;
-         $header_lines  = self::raw_header_lines($headers);
+         $header_lines  = static::raw_header_lines($headers);
          
          // actual message content
-         $this->message = implode(self::NL, array(
-            self::raw_bound($bound), 
+         $this->message = implode(static::NL, array(
+            static::raw_bound($bound), 
             $header_lines,
             $message,
          ));
@@ -206,33 +206,33 @@ class Email
             $b64c = chunk_split(base64_encode($data)); 
             
             // each file one a time
-            $this->message = implode(self::NL, array(
+            $this->message = implode(static::NL, array(
                $this->message,
-               self::raw_bound($bound), 
+               static::raw_bound($bound), 
                // attachment
-               self::raw_header(self::CONTENT_TYPE_HEADER,
-                  sprintf(self::ATTACH_HEADER_VALUE, $mime, $name)),
+               static::raw_header(static::CONTENT_TYPE_HEADER,
+                  sprintf(static::ATTACH_HEADER_VALUE, $mime, $name)),
                // content encoding
-               self::raw_header(self::ENCODING_HEADER, 
-                  self::ENCODING_HEADER_VALUE),
+               static::raw_header(static::ENCODING_HEADER, 
+                  static::ENCODING_HEADER_VALUE),
                // content disposition
-               self::raw_header(self::DISPOSITION_HEADER, 
-                  self::DISPOSITION_HEADER_VALUE),
+               static::raw_header(static::DISPOSITION_HEADER, 
+                  static::DISPOSITION_HEADER_VALUE),
                '',
                $b64c,
             ));
          }
          
          // closing bound
-         $this->message = implode(self::NL, array(
+         $this->message = implode(static::NL, array(
             $this->message,
-            self::raw_bound($bound, true),
+            static::raw_bound($bound, true),
          ));
          
          return array(
             // alternative header
-            self::CONTENT_TYPE_HEADER =>
-               sprintf(self::MIXED_HEADER_VALUE, $bound),
+            static::CONTENT_TYPE_HEADER =>
+               sprintf(static::MIXED_HEADER_VALUE, $bound),
          );
       }
       
@@ -248,7 +248,7 @@ class Email
       foreach($headers as $name => $value)
         $this->set_header($name, $value);
         
-      $header_lines = self::raw_header_lines($this->headers);
+      $header_lines = static::raw_header_lines($this->headers);
       
       $to = $this->to_email;
       $from = $this->from_email;
@@ -262,17 +262,17 @@ class Email
         $from = sprintf('%s <%s>', 
            $this->from_name, $this->from_email);
            
-      $header_lines = implode(self::NL, array(
+      $header_lines = implode(static::NL, array(
          // mailer name
-         self::raw_header(self::MAILER_HEADER,
-            ($this->mailer ? $this->mailer : self::MAILER_HEADER_VALUE)),
+         static::raw_header(static::MAILER_HEADER,
+            ($this->mailer ? $this->mailer : static::MAILER_HEADER_VALUE)),
          // mime version
-         self::raw_header(self::MIME_HEADER,
-            self::MIME_HEADER_VALUE),
+         static::raw_header(static::MIME_HEADER,
+            static::MIME_HEADER_VALUE),
          // from address
-         self::raw_header(self::FROM_HEADER, $from),
+         static::raw_header(static::FROM_HEADER, $from),
          // cc addresses
-         self::raw_header(self::CC_HEADER, $cc),
+         static::raw_header(static::CC_HEADER, $cc),
          // others
          $header_lines,
       ));
@@ -285,7 +285,7 @@ class Email
       else
       {
          // return the email in plain text
-         return implode(self::NL, array(
+         return implode(static::NL, array(
             sprintf('To: %s', $to),
             sprintf('Subject: %s', $this->subject),
             $header_lines,

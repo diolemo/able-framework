@@ -10,27 +10,27 @@ class Feedback
       if (defined('ABLE_TERMINATED')) return null;
       $feedback = Context::$session->read('able_feedback');
       if ($feedback === null) $feedback = array();
-      $feedback = array_merge($feedback, self::$queue);
+      $feedback = array_merge($feedback, static::$queue);
       if (count($feedback) === 0) return null;
       Context::$session->delete('able_feedback');
-      self::$queue = array();
+      static::$queue = array();
       return $feedback;
    }
    
    public static function set($feedback)
    {
-      self::write($feedback);
+      static::write($feedback);
    }
    
    public static function write($feedback) 
    {
-      self::$queue[] = $feedback;
+      static::$queue[] = $feedback;
       
-      if (self::$has_callback) return;
-      self::$has_callback = true;
+      if (static::$has_callback) return;
+      static::$has_callback = true;
       
       Context::$session->on_commit(function($session) {
-         $session->write('able_feedback', self::$queue);
+         $session->write('able_feedback', static::$queue);
       });
    }
 }

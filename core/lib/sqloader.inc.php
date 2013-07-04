@@ -64,15 +64,15 @@ abstract class SQLoader
    // value specified in svars[name]
    public static function load($name, $svars = array())
    {
-      return self::read($name, $svars);
+      return static::read($name, $svars);
    }
    
    // @svars replaces ${{name}} with the
    // value specified in svars[name]
    public static function read($name, $svars = array())
    {
-      if (isset(self::$__cached[$name]))
-         return self::$__cached[$name];
+      if (isset(static::$__cached[$name]))
+         return static::$__cached[$name];
       
       $filename = sprintf('%s.sql', $name);
       $file = implode(DIRECTORY_SEPARATOR, array(

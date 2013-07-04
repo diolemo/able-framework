@@ -25,15 +25,15 @@ class Date
       if ($difference === 0) return 'now';
       $absolute = abs($difference);
       
-      for ($i = 0, $c = count(self::$__periods); $i < $c; $i++) 
+      for ($i = 0, $c = count(static::$__periods); $i < $c; $i++) 
       {
-         $divisor = self::$__periods[$i]['divisor'];
+         $divisor = static::$__periods[$i]['divisor'];
          
          if ($absolute >= $divisor)
          {
             $rounded = (int) round($absolute / $divisor);
-            $name = ($rounded === 1 ? self::$__periods[$i]['name'] : 
-               self::$__periods[$i]['name_plural']);
+            $name = ($rounded === 1 ? static::$__periods[$i]['name'] : 
+               static::$__periods[$i]['name_plural']);
             
             return ($difference > 0 ? 
                sprintf('%s %s ago', $rounded, $name) : 

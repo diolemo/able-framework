@@ -9,13 +9,13 @@ class Blowfish
    
    public static function __hash($input, $hashed = null) 
    {
-      $bf = new self(self::COST);
+      $bf = new static(static::COST);
       return $bf->hash($input, $hashed);
    }
    
    public function __construct($cost = null)
    {
-      $this->cost = $cost === null ? self::COST : $cost;
+      $this->cost = $cost === null ? static::COST : $cost;
    }
    
    public function hash($input, $hashed = null) 

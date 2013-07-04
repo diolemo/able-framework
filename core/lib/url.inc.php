@@ -26,7 +26,7 @@ class URL
    
    public static function __parse(&$url)
    {
-      $instance = new self($url, true);
+      $instance = new static($url, true);
       return $instance;
    }
    
