@@ -1,6 +1,6 @@
 <?php
 
-function terminate($status) 
+function terminate($status = 0) 
 { 
    define('ABLE_TERMINATED', true);
    exit($status);
