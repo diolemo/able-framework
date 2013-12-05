@@ -1,6 +1,6 @@
 <?php
 
-class MYSQL_Database extends mysqli
+class MYSQL_Database extends MYSQLi
 {
    private $conf;
    private $defaults = array(
