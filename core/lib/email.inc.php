@@ -315,7 +315,7 @@ class Email
    const CONTENT_TYPE_HEADER        = 'Content-Type';
    const ATTACH_HEADER_VALUE        = '%s; name="%s"';
    const ENCODING_HEADER            = 'Content-Transfer-Encoding';
-   const ENCODING_HEADER_VALUE      = 'base64';
+   const ENCODING_HEADER_BASE64     = 'base64';
    const ENCODING_HEADER_BINARY     = 'binary';
    const DISPOSITION_HEADER         = 'Content-Disposition';
    const DISPOSITION_HEADER_VALUE   = 'attachment';
