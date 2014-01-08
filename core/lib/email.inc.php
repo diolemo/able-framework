@@ -91,9 +91,9 @@ class Email
       $this->headers[$name] = $value;
    }
    
-   public function add_attachment($file, $name)
+   public function add_attachment($file, $name, $mime = null)
    {
-      $this->attachments[] = array($file, $name);
+      $this->attachments[] = array($file, $name, $mime);
    }
        
    public function add_cc($val)
@@ -117,7 +117,7 @@ class Email
    {
       // no header lines
       if (count($headers) == 0)
-        return '';
+        return null;
         
       $raw_headers = array();         
       foreach($headers as $name => $value)
@@ -197,13 +197,25 @@ class Email
          {
             $file = $attach[0];
             $name = $attach[1];
+            $mime = $attach[2];
             
             if (!is_file($file)) 
               continue;
               
-            $mime = mime_content_type($file);
+            if (!$mime) $mime = mime_content_type($file);
             $data = file_get_contents($file);
-            $b64c = chunk_split(base64_encode($data)); 
+            
+            // attached emails must not be encoded
+            if (preg_match('#^message/rfc822$#i', $mime))
+            {
+               $encoding = static::ENCODING_HEADER_BINARY;
+               $b64c =& $data;
+            }
+            else
+            {
+               $b64c = chunk_split(base64_encode($data));
+               $encoding = static::ENCODING_HEADER_BASE64;
+            }
             
             // each file one a time
             $this->message = implode(static::NL, array(
@@ -213,12 +225,11 @@ class Email
                static::raw_header(static::CONTENT_TYPE_HEADER,
                   sprintf(static::ATTACH_HEADER_VALUE, $mime, $name)),
                // content encoding
-               static::raw_header(static::ENCODING_HEADER, 
-                  static::ENCODING_HEADER_VALUE),
+               static::raw_header(static::ENCODING_HEADER, $encoding),
                // content disposition
                static::raw_header(static::DISPOSITION_HEADER, 
                   static::DISPOSITION_HEADER_VALUE),
-               '',
+               null,
                $b64c,
             ));
          }
@@ -305,6 +316,7 @@ class Email
    const ATTACH_HEADER_VALUE        = '%s; name="%s"';
    const ENCODING_HEADER            = 'Content-Transfer-Encoding';
    const ENCODING_HEADER_VALUE      = 'base64';
+   const ENCODING_HEADER_BINARY     = 'binary';
    const DISPOSITION_HEADER         = 'Content-Disposition';
    const DISPOSITION_HEADER_VALUE   = 'attachment';
    const MIXED_HEADER_VALUE         = 'multipart/mixed; boundary="%s"';
