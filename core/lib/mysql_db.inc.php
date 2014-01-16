@@ -243,7 +243,9 @@ class MYSQL_Database extends MYSQLi
    // fetch all rows as array
    public function all($sql, $type_str=null, $data_args=null)
    {
-      return $this->call($sql, $type_str, $data_args);
+      $result = $this->call($sql, $type_str, $data_args);
+      if (!is_array($result)) $result = array();
+      return $result;
    }
 
    // fetch single row as array
@@ -268,7 +270,6 @@ class MYSQL_Database extends MYSQLi
    public function field_all($sql, $field, $type_str=null, $data_args=null)
    {
       $result = $this->all($sql, $type_str, $data_args);
-      if (!is_array($result)) return $result;
       $values = array();      
       foreach ($result as $v) 
          $values[] = $v[$field];      
@@ -288,7 +289,6 @@ class MYSQL_Database extends MYSQLi
    public function value_all($sql, $type_str=null, $data_args=null)
    {
       $result = $this->all($sql, $type_str, $data_args);
-      if (!is_array($result)) return $result;
       $values = array();
       foreach ($result as $v) 
          $values[] = array_pop($v);
