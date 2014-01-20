@@ -64,7 +64,7 @@ class Request
    // determine if request data is set for <name>
    public static function has($name = null)
    {
-      if ($name === null) return isset(static::$__source);
+      if ($name === null) return !empty(static::$__source);
       return isset(static::$__source[$name]);
    }
    
