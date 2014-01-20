@@ -9,9 +9,11 @@ class Content
    public static $__auto_trim = true;
    public static $__captured = array();
    
-   private static $__active_captures = array();   
-   private static $__content;
+   private static $__active_captures = array();
    private static $__type_set = false;
+   
+   public static $__content;
+   public static $__title;
    
    public static function __render() 
    {
