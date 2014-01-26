@@ -12,10 +12,10 @@ if (Context::$conf['content_dir'] !== null)
       return require($files[0]);
 }
 
-Content::$__auto_render = false;
 header('HTTP/1.0 404 Not Found');
 if (Context::$conf['error_doc_404'] !== null)
    die(require(Context::$conf['error_doc_404']));
+Content::$__auto_render = false;
 
 ?>
 <!doctype html>
