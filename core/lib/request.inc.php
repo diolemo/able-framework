@@ -1,7 +1,7 @@
 <?php
 
 // call the __init() method once all libs load
-$__able_lib_callbacks[] = 'Request::__init';
+$__able_lib_callbacks[] = 'REQUEST::__init';
 
 class Request
 {
@@ -12,6 +12,12 @@ class Request
    
    public static function __init()
    {
+      if (static::is_cli()) 
+      {
+         Content::$__auto_render = false;
+         return;
+      }
+      
       $_SERVER['REQUEST_PATH'] = explode('?', 
          $_SERVER['REQUEST_URI'])[0];
       
@@ -24,8 +30,8 @@ class Request
       static::$url->local = Request::__local_url();
       static::$url->build();
       
-      static::$url->base = static::$url->conn . 
-         Context::$conf['base_url'];
+      $prefix = strstr(static::$url->url, static::$url->path, true);
+      static::$url->base = $prefix . Context::$conf['base_url'];
       
       static::$remote_addr = $_SERVER['REMOTE_ADDR'];
       static::$remote_port = $_SERVER['REMOTE_PORT'];
@@ -39,10 +45,16 @@ class Request
    private static function __local_url() 
    {
       $base = Context::$conf['base_url'];
-      $path = static::$url->path;
+      $path = static::$url->path;      
       if (strpos($path, $base) !== 0)
          throw new Exception();
       return substr($path, strlen($base));
+   }
+   
+   // is this a cli request?
+   public static function is_cli()
+   {
+      return php_sapi_name() === 'cli';
    }
    
    // return request data (or set it)
@@ -74,6 +86,12 @@ class Request
       $url = new URL();
       $url->path = static::$url->local;
       return $url->param($index);
+   }
+   
+   // return the part for $index 
+   public static function section($index)
+   {
+      return static::param($index);
    }
    
    // sends redirect to url but does not exit

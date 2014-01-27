@@ -10,16 +10,11 @@ class Auth
    // the current url based on url patterns
    public static function __check_no_auth()
    {
-      if (defined('ABLE_NO_AUTH')) return;
-      if (static::$user !== null) return;
-      
+      if (static::$user !== null) return;      
       for ($i = 0, $c = count(static::$__allow_no_auth); $i < $c; $i++)
-      {
-         $pattern = static::$__allow_no_auth[$i];
-         if (preg_match($pattern, Request::$url->local))
+         if (preg_match(static::$__allow_no_auth[$i], Request::$url->local))
             return;
-      }
-      
+         
       static::not_authorized();
    }
    

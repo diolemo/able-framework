@@ -1,20 +1,24 @@
 <?php 
 
-define('ABLE_NO_AUTH', true);
-require_once('init.php');
-
-if (Context::$conf['content_dir'] !== null)
+if (($c_dir = Context::$conf['content_dir']) !== null)
 {
-   $path = str_replace('/', '_', Request::$url->local);
-   $file_pattern = sprintf('%s/%s.html', 
-      Context::$conf['content_dir'], $path);   
-   if ($files = glob($file_pattern))
-      return require($files[0]);
+   $local = Request::$url->local;
+   if (!$local) $local = 'index';
+   $path = str_replace('/', '_', $local);
+   $file = sprintf('%s/%s.html', $c_dir, $path);  
+   
+   if (is_file($file))
+   {
+      // needed for feedback to work
+      Context::$session = Session::start();
+      return require($file);
+   }      
 }
 
 header('HTTP/1.0 404 Not Found');
 if (Context::$conf['error_doc_404'] !== null)
    die(require(Context::$conf['error_doc_404']));
+
 Content::$__auto_render = false;
 
 ?>

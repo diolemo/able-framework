@@ -1,5 +1,7 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index\.php$ core/init.php [L]
+
+RewriteCond %{REQUEST_URI} ^$ [OR]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) core/router.php [L]
+RewriteRule ^(.*)$ core/init.php [L]
