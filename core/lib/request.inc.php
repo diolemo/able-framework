@@ -30,7 +30,12 @@ class Request
       static::$url->local = Request::__local_url();
       static::$url->build();
       
-      $prefix = strstr(static::$url->url, static::$url->path, true);
+      $host_url = clone static::$url;
+      $host_url->raw_query = null;
+      $host_url->path = '/';
+      $host_url->build();
+      
+      $prefix = substr($host_url->url, 0, -1);
       static::$url->base = $prefix . Context::$conf['base_url'];
       
       static::$remote_addr = $_SERVER['REMOTE_ADDR'];
