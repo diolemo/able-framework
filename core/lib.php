@@ -1,13 +1,8 @@
 <?php
 
-function terminate($status = 0) 
-{ 
-   define('ABLE_TERMINATED', true);
-   exit($status);
-}
-
 $__able_lib_callbacks = array();
 
+require_once('core/lib/functions.inc.php');
 require_once('core/lib/__interface.user.php');
 require_once('core/lib/blowfish.inc.php');
 require_once('core/lib/cookie.inc.php');
