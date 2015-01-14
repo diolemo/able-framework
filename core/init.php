@@ -45,11 +45,8 @@ register_shutdown_function(function()
 	Content::__trim();
 });
 
-$route = require('core/router.php');
-if ($route === 404) 
-	return require('core/404.php');
-
 require('core/auth.check.php');
-route_request($route);
+if (require('core/router.php') === 404) 
+	return require('core/404.php');
 
 ?>
