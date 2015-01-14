@@ -94,7 +94,7 @@ class URL
 	// the part at the given index
 	public function param($index = null)
 	{
-		$params = explode('/', $this->path);
+		$params = array_filter(explode('/', $this->path));
 		if (strlen($params[0]) === 0)
 			array_shift($params);
 		if ($index === null)
