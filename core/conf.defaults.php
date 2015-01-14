@@ -34,10 +34,4 @@ Context::$conf['sqloader_dir'] = 'sql';
 // template file for auto rendering of documents
 Context::$conf['template'] = 'html/template.php';
 
-// the email address that should send mails
-Context::$conf['email_from'] = null;
-
-// the email address that receives emails
-Context::$conf['email_to'] = null;
-
 ?>
