@@ -27,16 +27,10 @@ class Request
       static::$url->port = $_SERVER['SERVER_PORT'];
       static::$url->path = $_SERVER['REQUEST_PATH'];
       static::$url->raw_query = $_SERVER['QUERY_STRING'];
-      static::$url->local = Request::__local_url();
       static::$url->build();
-      
-      $host_url = clone static::$url;
-      $host_url->raw_query = null;
-      $host_url->path = '/';
-      $host_url->build();
-      
-      $prefix = substr($host_url->url, 0, -1);
-      static::$url->base = $prefix . Context::$conf['base_url'];
+
+      static::$url->base = Request::__base_url();
+      static::$url->local = Request::__local_url();
       
       static::$remote_addr = $_SERVER['REMOTE_ADDR'];
       static::$remote_port = $_SERVER['REMOTE_PORT'];
@@ -55,7 +49,16 @@ class Request
          throw new Exception();
       return substr($path, strlen($base));
    }
-   
+
+   // return the url before able root
+   private static function __base_url()
+   {
+      $parts = array();
+      $parts[] = static::$url->conn;
+      $parts[] = Context::$conf['base_url'];
+      return implode($parts);
+   }
+
    // is this a cli request?
    public static function is_cli()
    {
