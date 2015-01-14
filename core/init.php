@@ -22,10 +22,9 @@ require('core/content.php');
 require('core/lib.php');
 
 Content::__init_buffers();
-
-// Context::$db = new MySQL_Database(Context::$conf['database']);
+Context::$db = new MySQL_Database(Context::$conf['database']);
 Context::$cache = new DataCache(Context::$conf['cache']);
-Context::$session = Session::start();
+// Context::$session = Session::start();
 
 require('core/auth.php');
 require('core/local.php');
@@ -42,12 +41,7 @@ $route = require('core/router.php');
 if ($route === null) 
 	return require('404.php');
 
-if (!Request::is_cli())
-{
-	Auth::__check_no_auth();
-	Auth::__check_auth_conditions();
-}
-
+require('core/auth.check.php');
 require($route);
 
 ?>
