@@ -29,7 +29,7 @@ require('core/lib.php');
 Content::__init_buffers();
 Context::$db = new MySQL_Database(Context::$conf['database']);
 Context::$cache = new DataCache(Context::$conf['cache']);
-// Context::$session = Session::start();
+Context::$session = Session::start();
 
 require('core/auth.php');
 require('core/local.php');
