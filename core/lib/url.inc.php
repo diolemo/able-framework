@@ -97,7 +97,16 @@ class URL
 		$params = explode('/', $this->path);
 		if (strlen($params[0]) === 0)
 			array_shift($params);
-		if ($index === null) return $params;
+		if ($index === null)
+			return $params;
+
+		if ($index < 0) 
+		{
+			$slice = array_slice($params, $index, 1);
+			if (!isset($slice[0])) return null;
+			return $slice[0];
+		}
+
 		if (!isset($params[$index])) return null;
 		return $params[$index];
 	}
