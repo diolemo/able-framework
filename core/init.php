@@ -12,6 +12,7 @@ define('ABLE_DEFAULT', '__able_default__');
 set_include_path(ABLE_BASE_DIR);
 chdir(ABLE_BASE_DIR);
 
+require('core/pre.php');
 require('core/utf8_safe.php');
 require('core/version.php');
 
