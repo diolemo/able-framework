@@ -1,5 +1,9 @@
 <?php
 
+// already loaded? quit
+if (defined('ABLE_DEFAULT')) return;
+
+// you should always use utc everywhere!
 date_default_timezone_set('UTC');
 
 // the base directory of the able framework
