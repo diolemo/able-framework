@@ -1,7 +1,7 @@
 <?php
 
-// direct request so just return
-if (ABLE_DIRECT_REQUEST) return;
+// not direct request so just return
+if (!ABLE_DIRECT_REQUEST) return;
 
 $sections = array();
 while (($section = Request::section(count($sections))) !== null)
@@ -46,6 +46,6 @@ for ($klen = count($sections); $klen > 0; $klen--)
 		return require("{$base}/{$cpath}.html");
 }
 
-return 404;
+require('core/404.php');
 	
 ?>
