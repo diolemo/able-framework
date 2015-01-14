@@ -2,6 +2,9 @@
 
 class URL
 {
+   const SCHEME_HTTP = 'http';
+   const SCHEME_HTTPS = 'https';
+
    protected $__parsed = false;
    
    // local url relative system
@@ -43,6 +46,9 @@ class URL
    
    public function build()
    {
+      if (!$this->scheme)
+         $this->scheme = static::SCHEME_HTTP;
+
       $bits = (array) $this;
       $bits['query'] = $bits['raw_query'];
       $this->url = http_build_url($bits);  
