@@ -57,17 +57,6 @@ class URL
       
       $this->conn = http_build_url($conn);
       $this->conn = substr($this->conn, 0, -1);
-
-      $this->conn . $base;
-      $this->base = 
-
-      $host_url = clone static::$url;
-      $host_url->raw_query = null;
-      $host_url->path = '/';
-      $host_url->build();
-      
-      $prefix = substr($host_url->url, 0, -1);
-      $prefix . Context::$conf['base_url'];
       
       return $this->url;
    }
