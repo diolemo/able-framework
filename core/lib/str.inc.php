@@ -21,4 +21,9 @@ function str_wild($value, $char = '%')
    return $value;      
 }
 
+function str_contains($haystack, $needle)
+{
+	return strpos($haystack, $needle) !== false;
+}
+
 ?>
