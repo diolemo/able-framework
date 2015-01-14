@@ -39,7 +39,7 @@ register_shutdown_function(function()
 
 $route = require('core/router.php');
 if ($route === null) 
-	return require('404.php');
+	return require('core/404.php');
 
 require('core/auth.check.php');
 require($route);
