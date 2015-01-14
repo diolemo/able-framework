@@ -13,6 +13,9 @@ define('ABLE_BASE_DIR', realpath(sprintf('%s%s..',
 // a value that means use the default
 define('ABLE_DEFAULT', '__able_default__');
 
+// direct request if not loaded via another file
+define('ABLE_DIRECT', $_SERVER['SCRIPT_FILENAME'] === __FILE__);
+
 set_include_path(ABLE_BASE_DIR);
 chdir(ABLE_BASE_DIR);
 
@@ -43,10 +46,10 @@ register_shutdown_function(function()
 });
 
 $route = require('core/router.php');
-if ($route === null) 
+if ($route === 404) 
 	return require('core/404.php');
 
 require('core/auth.check.php');
-require($route);
+route_request($route);
 
 ?>
