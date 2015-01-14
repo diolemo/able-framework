@@ -1,8 +1,5 @@
 <?php
 
-ob_start(); // trim
-ob_start(); // render
-
 class Content
 {
    public static $__auto_render = true;
@@ -14,6 +11,12 @@ class Content
    
    public static $__content;
    public static $__title;
+
+   public static function __init_buffers()
+   {
+      ob_start(); // trim
+      ob_start(); // render
+   }
    
    public static function __render() 
    {

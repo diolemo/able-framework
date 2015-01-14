@@ -19,8 +19,9 @@ require('core/context.php');
 require('core/conf.defaults.php');
 require('core/conf.php');
 require('core/content.php');
-
 require('core/lib.php');
+
+Content::__init_buffers();
 
 // Context::$db = new MySQL_Database(Context::$conf['database']);
 Context::$cache = new DataCache(Context::$conf['cache']);
