@@ -34,4 +34,7 @@ Context::$conf['sqloader_dir'] = 'sql';
 // template file for auto rendering of documents
 Context::$conf['template'] = 'html/template.php';
 
+// the environment level for error reporting
+Context::$conf['environment'] = Context::ENV_DEVELOPMENT;
+
 ?>
