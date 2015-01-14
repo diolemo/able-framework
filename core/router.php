@@ -1,5 +1,14 @@
 <?php
 
+function route_request($route)
+{
+	if (ABLE_DIRECT) return;
+	require($route);
+}
+
+// direct request so just return
+if (ABLE_DIRECT) return;
+
 $sections = array();
 while (($section = Request::section(count($sections))) !== null)
 	$sections[] = $section;
@@ -43,6 +52,6 @@ for ($klen = count($sections); $klen > 0; $klen--)
 		return "{$base}/{$cpath}.html";
 }
 
-return null;
+return 404;
 	
 ?>
