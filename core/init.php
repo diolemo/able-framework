@@ -13,8 +13,8 @@ define('ABLE_BASE_DIR', realpath(sprintf('%s%s..',
 // a value that means use the default
 define('ABLE_DEFAULT', '__able_default__');
 
-// direct request if not loaded via another file
-define('ABLE_DIRECT', $_SERVER['SCRIPT_FILENAME'] === __FILE__);
+// direct request if not loaded via another file with require
+define('ABLE_DIRECT_REQUEST', $_SERVER['SCRIPT_FILENAME'] === __FILE__);
 
 set_include_path(ABLE_BASE_DIR);
 chdir(ABLE_BASE_DIR);
