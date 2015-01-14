@@ -108,7 +108,7 @@ class URL
 		}
 
 		if (!isset($params[$index])) return null;
-		return rawurldecode($params[$index];
+		return rawurldecode($params[$index]);
 	}
 	
 }
