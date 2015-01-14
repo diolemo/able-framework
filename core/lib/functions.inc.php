@@ -6,7 +6,7 @@ function terminate($status = 0)
    exit($status);
 }
 
-function show_404();
+function show_404()
 {
 	require('core/404.php');
 	terminate();
